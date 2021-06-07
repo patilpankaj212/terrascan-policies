@@ -1,0 +1,166 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: read-secrets
+  namespace: development
+subjects:
+  - kind: User
+    name: dave
+    apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: role
+  name: default
+  apiGroup: rbac.authorization.k8s.io
+rules:
+  resources: ["secret", "pod"]
+  verbs: ["create"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: read-secrets
+  namespace: development
+subjects:
+  - kind: User
+    name: dave
+    apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: cluster-admin
+  apiGroup: rbac.authorization.k8s.io
+rules:
+  resources: ["secret", "pod"]
+  verbs: ["create"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: default
+  name: risky-get-secrets
+  priority: CRITICAL
+rules:
+  - apiGroups: ["*"]
+    resources: ["secrets"]
+    verbs: ["get", "list", "*"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: default
+  name: risky-impersonate-role
+  priority: CRITICAL
+rules:
+  - apiGroups: ["*"]
+    resources: ["groups", "users", "*"]
+    verbs: ["impersonate"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: default
+  name: risky-verbs-workloads
+  priority: HIGH
+rules:
+  - apiGroups: ["*"]
+    resources:
+      [
+        "deployments",
+        "pods",
+        "deployments",
+        "cronjobs",
+        "daemonsets",
+        "statefulsets",
+        "replicationcontrollers",
+        "replicasets",
+        "jobs",
+        "*",
+      ]
+    verbs: ["*", "delete", "deletecollection", "create", "list", "get"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: default
+  name: risky-any-verb-rbac-items
+  priority: CRITICAL
+rules:
+  - apiGroups: ["*"]
+    resources: ["clusterroles", "rolebindings", "clusterrolebindings"]
+    verbs: ["*"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: default
+  name: risky-rolebindings
+  priority: HIGH
+rules:
+  - apiGroups: ["rbac.authorization.k8s.io"]
+    resources: ["rolebindings"]
+    verbs: ["create"]
+  - apiGroups: ["rbac.authorization.k8s.io"]
+    resources: ["clusterroles, roles"]
+    verbs: ["bind"]
+    resourceNames: ["*"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: default
+  name: risky-clusterbindings
+  priority: HIGH
+rules:
+  - apiGroups: ["rbac.authorization.k8s.io"]
+    resources: ["clusterrolebindings"]
+    verbs: ["create"]
+  - apiGroups: ["rbac.authorization.k8s.io"]
+    resources: ["clusterroles"]
+    verbs: ["bind"]
+    resourceNames: ["*"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: default
+  name: risky-attach-pods
+  priority: HIGH
+rules:
+  - apiGroups: ["*"]
+    resources: ["pods/attach"]
+    verbs: ["create"]
+  - apiGroups: ["*"]
+    resources: ["pods"]
+    verbs: ["get"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: default
+  name: risky-exec-pods
+  priority: HIGH
+rules:
+  - apiGroups: ["*"]
+    resources: ["pods/exec"]
+    verbs: ["create"]
+  - apiGroups: ["*"]
+    resources: ["pods"]
+    verbs: ["get"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: default
+  name: risky-add-rolebinding
+  priority: LOW
+rules:
+  - apiGroups: ["*"]
+    resources: ["rolebindings"]
+    verbs: ["get", "patch"]

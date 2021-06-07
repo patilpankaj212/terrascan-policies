@@ -1,0 +1,14 @@
+{
+    "name": "reme_checkDataDisksEncrypted",
+    "file": "checkDataDisksEncrypted.rego",
+    "policy_type": "azure",
+    "resource_type": "azurerm_managed_disk",
+    "template_args": {
+        "prefix": "reme_"
+    },
+    "severity": "MEDIUM",
+    "description": "Ensure that 'OS disk' are encrypted",
+    "reference_id": "accurics.azure.EKM.156",
+    "category": "Data Protection",
+    "version": 2
+}
