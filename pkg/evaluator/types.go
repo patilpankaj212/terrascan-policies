@@ -21,7 +21,7 @@ func (t *TerrascanPolicyEvaluator) EvalPositive() error {
 		return fmt.Errorf("positive iac file should be present for evaluation")
 	}
 
-	executor, err := runtime.NewExecutor("", "", []string{}, t.PositiveIacFilePath, "", []string{t.DirPath}, nil, nil, nil, "", false)
+	executor, err := runtime.NewExecutor(t.IacType, "", []string{}, t.PositiveIacFilePath, "", []string{t.DirPath}, nil, nil, nil, "", false)
 	if err != nil {
 		return err
 	}
@@ -48,7 +48,7 @@ func (t *TerrascanPolicyEvaluator) EvalNegative() error {
 		return fmt.Errorf("negative iac file should be present for evaluation")
 	}
 
-	executor, err := runtime.NewExecutor("", "", []string{}, t.NegativeIacFilePath, "", []string{t.DirPath}, nil, nil, nil, "", false)
+	executor, err := runtime.NewExecutor(t.IacType, "", []string{}, t.NegativeIacFilePath, "", []string{t.DirPath}, nil, nil, nil, "", false)
 	if err != nil {
 		return err
 	}
