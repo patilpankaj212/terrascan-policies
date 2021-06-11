@@ -72,6 +72,6 @@ func (p *PolicyDirConfig) loadIacFiles() {
 	}
 
 	if negativeIacFilePath != "" {
-		p.PositiveIacFilePath = filepath.Join(iacDir, negativeIacFilePath)
+		p.NegativeIacFilePath = filepath.Join(iacDir, negativeIacFilePath)
 	}
 }

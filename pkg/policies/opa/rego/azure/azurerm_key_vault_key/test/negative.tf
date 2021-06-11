@@ -59,8 +59,4 @@ resource "azurerm_key_vault_key" "ckeckKeyExpirationIsSet" {
     "verify",
     "wrapKey",
   ]
-
-  #Note:
-  #this is added for testing purse, should be validated by policy team
-  expiration_date = "2030-01-01T00:00:00Z"
 }
