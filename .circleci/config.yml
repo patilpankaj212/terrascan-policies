@@ -29,8 +29,4 @@ workflows:
   version: 2
   policy_test:
     jobs:
-      - build:
-         filters:
-            branches:
-              only:
-                - main
+      - build
