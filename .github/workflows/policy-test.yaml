@@ -20,8 +20,13 @@ jobs:
       with:
         go-version: ${{ env.GO_VERSION }}
 
+    - name: install gotestsum
+      run: go get -u gotest.tools/gotestsum
+
     - name: Download Dependencies
-      run: go mod download
- 
+      run: |
+        go mod tidy
+        go mod download
+
     - name: Test
-      run: go test -v ./pkg/policies/opa/rego/...
+      run: gotestsum --format testname ./pkg/policies/opa/rego/...
