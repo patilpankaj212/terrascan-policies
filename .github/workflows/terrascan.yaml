@@ -1,0 +1,20 @@
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+jobs:
+  terrascan_job:
+    runs-on: ubuntu-latest
+    name: terrascan-action
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Run Terrascan
+        id: terrascan
+        uses: accurics/terrascan-action@main
+        with:
+          only_warn: true
+          verbose: true
+          webhook_url: https://df32-103-141-116-117.ngrok.io/v1/api/terrascan
+          webhook_token: 9b00b174-b41a-4ee1-9b16-466ffc7b8df6
