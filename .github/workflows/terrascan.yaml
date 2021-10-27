@@ -10,11 +10,11 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-      - name: Run Terrascan
+      - name: Accurics Scan
         id: terrascan
         uses: accurics/terrascan-action@main
         with:
           only_warn: true
           verbose: true
-          webhook_url: https://df32-103-141-116-117.ngrok.io/v1/api/terrascan
-          webhook_token: 9b00b174-b41a-4ee1-9b16-466ffc7b8df6
+          webhook_url: https://devenv.accurics.com/v1/api/terrascan
+          webhook_token: 6c0a62a1-b0a2-47db-a4d7-5156f8901d16
