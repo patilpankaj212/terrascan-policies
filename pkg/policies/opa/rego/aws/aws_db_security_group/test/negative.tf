@@ -7,7 +7,7 @@ resource "aws_db_security_group" "rdsHostsHigherThan256" {
   name = "rds_sg"
 
   ingress {
-    cidr = "10.164.0.0/32"
+    cidr = "192.164.0.0/23"
   }
 }
 
